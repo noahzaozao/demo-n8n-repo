@@ -81,6 +81,41 @@ export class WebhookService {
     return response;
   }
 
+  async processGitHubWebhook(
+    body: any,
+    headers: Record<string, string>,
+    query: Record<string, string>
+  ) {
+    this.logger.log('收到 GitHub Webhook 请求');
+    
+    // 获取 GitHub 事件类型
+    const eventType = headers['x-github-event'];
+    const signature = headers['x-hub-signature-256'];
+    
+    if (eventType) {
+      this.logger.log(`GitHub 事件类型: ${eventType}`);
+    }
+    
+    if (signature) {
+      this.logger.log(`GitHub 签名验证: ${signature}`);
+    }
+
+    const response = {
+      success: true,
+      message: 'GitHub Webhook 处理成功',
+      timestamp: new Date().toISOString(),
+      source: 'github',
+      eventType: eventType || 'unknown',
+      receivedData: {
+        body,
+        headers: this.sanitizeHeaders(headers),
+        query,
+      },
+    };
+
+    return response;
+  }
+
   testWebhook() {
     return {
       success: true,
@@ -90,6 +125,7 @@ export class WebhookService {
         general: 'POST /webhook',
         byId: 'POST /webhook/:id',
         n8n: 'POST /webhook/n8n',
+        github: 'POST /webhook/github',
         test: 'GET /webhook/test',
       },
     };

@@ -1,6 +1,6 @@
 {
   "name": "demo-n8n-nestjs",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Demo NestJS service for n8n integration",
   "author": "",
   "private": true,
