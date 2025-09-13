@@ -9,6 +9,7 @@
 - 📖 **API 文档**: 集成 Swagger 文档，访问 `/api` 查看
 - 🛡️ **数据验证**: 使用 class-validator 进行请求验证
 - 🚀 **CORS 支持**: 已启用跨域资源共享
+- 🔄 **GitHub 集成**: 新增 GitHub webhook 支持，用于测试 n8n 工作流
 
 ## 快速开始
 
@@ -49,6 +50,7 @@ npm run start:prod
 - `POST /webhook` - 通用 Webhook 接收
 - `POST /webhook/:id` - 指定 ID 的 Webhook 接收
 - `POST /webhook/n8n` - n8n 专用 Webhook 端点
+- `POST /webhook/github` - GitHub Webhook 接收端点
 - `GET /webhook/test` - Webhook 测试端点
 
 ### API 文档
@@ -87,6 +89,15 @@ npm run start:prod
 - **Webhook URL**: `http://localhost:3000/webhook`
 - **HTTP Method**: POST
 - **Response Mode**: Response Code
+
+### 3. GitHub Webhook 配置
+
+在 GitHub 仓库设置中配置 Webhook：
+
+- **Payload URL**: `http://your-domain.com/webhook/github`
+- **Content Type**: `application/json`
+- **Events**: 选择需要的事件类型（如 pull_request, push 等）
+- **Secret**: 可选，用于签名验证
 
 ## 环境变量
 

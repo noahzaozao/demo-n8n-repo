@@ -65,4 +65,19 @@ export class WebhookController {
   ) {
     return this.webhookService.processN8nWebhook(body, headers, query);
   }
+
+  @Post('github')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'GitHub Webhook 端点' })
+  @ApiBody({ type: WebhookDto })
+  @ApiHeader({ name: 'X-GitHub-Event', required: false, description: 'GitHub 事件类型' })
+  @ApiHeader({ name: 'X-Hub-Signature-256', required: false, description: 'GitHub 签名' })
+  @ApiResponse({ status: 200, description: 'GitHub Webhook 接收成功' })
+  async receiveGitHubWebhook(
+    @Body() body: any,
+    @Headers() headers: Record<string, string>,
+    @Query() query: Record<string, string>
+  ) {
+    return this.webhookService.processGitHubWebhook(body, headers, query);
+  }
 }
